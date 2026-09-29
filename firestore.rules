@@ -1,0 +1,82 @@
+rules_version = '2';
+
+// These rules are written to be easy to read for a beginner project.
+// They're a reasonable starting point for friends & family use, but if you
+// ever open this app up publicly you should have someone review them
+// (and consider moving sensitive checks into Cloud Functions).
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function groupDoc(groupId) {
+      return get(/databases/$(database)/documents/groups/$(groupId)).data;
+    }
+
+    function isMember(groupId) {
+      return isSignedIn() && request.auth.uid in groupDoc(groupId).memberIds;
+    }
+
+    function isAdmin(groupId) {
+      return isSignedIn() && request.auth.uid in groupDoc(groupId).adminIds;
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && request.auth.uid == userId;
+      allow delete: if false;
+    }
+
+    match /groups/{groupId} {
+      // Signed-in users can read a group's basic info (name, openJoin) even
+      // before joining, so the invite link screen can show it.
+      allow read: if isSignedIn();
+
+      allow create: if isSignedIn() &&
+        request.resource.data.creatorId == request.auth.uid &&
+        request.resource.data.memberIds == [request.auth.uid] &&
+        request.resource.data.adminIds == [request.auth.uid];
+
+      // Admins can change anything (settings, member lists, etc).
+      // Non-admins are only allowed to add *themselves* to memberIds,
+      // and only when the group has open join turned on.
+      allow update: if isAdmin(groupId) ||
+        (isSignedIn() &&
+          resource.data.openJoin == true &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['memberIds']) &&
+          request.resource.data.memberIds == resource.data.memberIds.concat([request.auth.uid]));
+
+      allow delete: if isAdmin(groupId);
+
+      match /members/{memberId} {
+        allow read: if isMember(groupId);
+        allow create: if isSignedIn() && memberId == request.auth.uid;
+        allow update, delete: if isAdmin(groupId) || memberId == request.auth.uid;
+      }
+
+      match /joinRequests/{uid} {
+        allow read: if isAdmin(groupId) || uid == request.auth.uid;
+        allow create: if isSignedIn() && uid == request.auth.uid;
+        allow delete: if isAdmin(groupId) || uid == request.auth.uid;
+      }
+
+      match /messages/{messageId} {
+        allow read: if isMember(groupId);
+        allow create: if isMember(groupId) && request.resource.data.senderId == request.auth.uid;
+        // Simplified: any member can update a message (used for reactions).
+        allow update: if isMember(groupId);
+        allow delete: if isAdmin(groupId) || resource.data.senderId == request.auth.uid;
+      }
+
+      match /media/{mediaId} {
+        allow read: if isMember(groupId);
+        allow create: if isMember(groupId) && request.resource.data.uploaderId == request.auth.uid;
+        allow update: if isMember(groupId);
+        allow delete: if isAdmin(groupId) || resource.data.uploaderId == request.auth.uid;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hide scrollbar but keep scrolling for the chat/gallery panes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-500 text-white font-semibold rounded-xl2 py-3 px-5 shadow-sm active:scale-[0.98] transition disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply bg-white text-gray-700 font-semibold rounded-xl2 py-3 px-5 border border-gray-200 active:scale-[0.98] transition;
+  }
+  .input-field {
+    @apply w-full rounded-xl2 border border-gray-200 bg-white px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-300;
+  }
+  .card {
+    @apply bg-white rounded-xl2 shadow-sm border border-gray-100;
+  }
+}
