@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # EventShare
 
 A simple group photo/video sharing + chat app for events (weddings, parties, trips).
@@ -159,3 +160,6 @@ internet, it's worth having someone more experienced review them (in
 particular: message/reaction updates are currently "any group member can
 edit any message doc," which is fine for reactions but is trusting the
 client more than a production app should).
+=======
+# -Momently
+>>>>>>> 7f2102fc38238bcb5c0ace23f3ccf43ebc659735
