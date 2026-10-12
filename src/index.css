@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
 body {
   -webkit-tap-highlight-color: transparent;
+  background-color: #f7f3f8;
 }
 
 /* Hide scrollbar but keep scrolling for the chat/gallery panes */
@@ -20,16 +23,64 @@ body {
 }
 
 @layer components {
+  /* Buttons */
   .btn-primary {
-    @apply bg-brand-500 text-white font-semibold rounded-xl2 py-3 px-5 shadow-sm active:scale-[0.98] transition disabled:opacity-50 disabled:pointer-events-none;
+    @apply bg-marigold-500 text-ink-900 font-semibold rounded-xl2 py-3 px-5 shadow-sm active:scale-[0.98] transition disabled:opacity-50 disabled:pointer-events-none;
   }
   .btn-secondary {
-    @apply bg-white text-gray-700 font-semibold rounded-xl2 py-3 px-5 border border-gray-200 active:scale-[0.98] transition;
+    @apply bg-white text-ink-700 font-semibold rounded-xl2 py-3 px-5 border border-ink-100 active:scale-[0.98] transition;
   }
   .input-field {
-    @apply w-full rounded-xl2 border border-gray-200 bg-white px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-300;
+    @apply w-full rounded-xl2 border border-ink-100 bg-white px-4 py-3 text-ink-900 placeholder-ink-300 focus:outline-none focus:ring-2 focus:ring-marigold-300;
   }
+
+  /* Plain card (admin panel, modals, lists) */
   .card {
-    @apply bg-white rounded-xl2 shadow-sm border border-gray-100;
+    @apply bg-white rounded-xl2 shadow-sm border border-ink-100;
+  }
+
+  /* Ticket-stub card used for each group on the group list.
+     The notches on the left/right edges are cut with a radial-gradient
+     mask, like a real event ticket stub. */
+  .ticket-card {
+    @apply relative bg-white rounded-2xl shadow-ticket;
+    --notch: 12px;
+    -webkit-mask-image:
+      radial-gradient(
+        circle var(--notch) at 0 50%,
+        transparent calc(var(--notch) - 1px),
+        black var(--notch)
+      ),
+      radial-gradient(
+        circle var(--notch) at 100% 50%,
+        transparent calc(var(--notch) - 1px),
+        black var(--notch)
+      );
+    -webkit-mask-composite: source-in;
+    mask-image:
+      radial-gradient(
+        circle var(--notch) at 0 50%,
+        transparent calc(var(--notch) - 1px),
+        black var(--notch)
+      ),
+      radial-gradient(
+        circle var(--notch) at 100% 50%,
+        transparent calc(var(--notch) - 1px),
+        black var(--notch)
+      );
+    mask-composite: intersect;
+  }
+  .ticket-stub-line {
+    @apply border-l-2 border-dashed border-ink-100;
+  }
+
+  /* Polaroid-style photo frame for the gallery grid */
+  .polaroid {
+    @apply bg-white p-2 pb-6 shadow-polaroid rounded-sm;
+  }
+
+  /* Floating dark pill bottom nav */
+  .floatnav-pill {
+    @apply bg-ink-900 shadow-floatnav rounded-full;
   }
 }

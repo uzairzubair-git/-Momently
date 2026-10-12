@@ -26,7 +26,7 @@ export default function GalleryTab({ groupId, isAdmin }) {
   }, [media]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="pb-28 pt-2 h-full overflow-y-auto no-scrollbar">
+    <div className="pb-28 pt-4 h-full overflow-y-auto no-scrollbar bg-paper">
       <GalleryGrid media={media} onSelect={setSelected} />
       <UploadButton groupId={groupId} />
       {selected && (

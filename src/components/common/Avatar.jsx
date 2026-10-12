@@ -1,4 +1,4 @@
-const COLORS = ['#fb4570', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899']
+const COLORS = ['#e0447b', '#f2994a', '#5b4b8a', '#4e3d79', '#dd7a1f', '#c22a60']
 
 function colorFor(name = '') {
   let hash = 0

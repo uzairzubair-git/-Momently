@@ -65,10 +65,10 @@ export default function ChatWindow({ groupId, isAdmin }) {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-paper">
       <div className="flex-1 overflow-y-auto no-scrollbar px-3 pt-3">
         {messages.length === 0 && (
-          <p className="text-center text-gray-400 text-sm mt-10">
+          <p className="text-center text-ink-300 text-sm mt-10">
             No messages yet. Say hi to the group! 👋
           </p>
         )}
@@ -78,7 +78,7 @@ export default function ChatWindow({ groupId, isAdmin }) {
         <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={sendMessage} className="relative border-t border-gray-100 bg-white px-3 py-2 flex items-center gap-2">
+      <form onSubmit={sendMessage} className="relative border-t border-ink-100 bg-white px-3 py-2 flex items-center gap-2">
         {showEmoji && (
           <EmojiPicker onSelect={(e) => setText((t) => t + e)} onClose={() => setShowEmoji(false)} />
         )}
@@ -111,10 +111,10 @@ export default function ChatWindow({ groupId, isAdmin }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Message the group…"
-          className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none"
+          className="flex-1 bg-paper rounded-full px-4 py-2 text-sm text-ink-900 placeholder-ink-300 focus:outline-none"
         />
 
-        <button type="submit" disabled={!text.trim()} className="text-brand-500 font-semibold px-2 disabled:opacity-30">
+        <button type="submit" disabled={!text.trim()} className="text-dusk-600 font-semibold px-2 disabled:opacity-30">
           Send
         </button>
       </form>

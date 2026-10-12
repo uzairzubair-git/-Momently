@@ -1,23 +1,27 @@
 export default function BottomTabs({ active, onChange }) {
   const tabs = [
-    { key: 'gallery', label: 'Gallery', icon: '🖼️' },
-    { key: 'chat', label: 'Chat', icon: '💬' },
-  ]
+    { key: "gallery", label: "Gallery", icon: "🖼️" },
+    { key: "chat", label: "Chat", icon: "💬" },
+  ];
 
   return (
-    <nav className="shrink-0 bg-white border-t border-gray-100 flex z-20">
-      {tabs.map((t) => (
-        <button
-          key={t.key}
-          onClick={() => onChange(t.key)}
-          className={`flex-1 flex flex-col items-center py-2.5 text-xs font-medium ${
-            active === t.key ? 'text-brand-500' : 'text-gray-400'
-          }`}
-        >
-          <span className="text-xl mb-0.5">{t.icon}</span>
-          {t.label}
-        </button>
-      ))}
+    <nav className="shrink-0 bg-paper px-4 pb-4 pt-2 z-20">
+      <div className="floatnav-pill flex max-w-xs mx-auto">
+        {tabs.map((t) => (
+          <button
+            key={t.key}
+            onClick={() => onChange(t.key)}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-medium rounded-full transition ${
+              active === t.key
+                ? "bg-marigold-500 text-ink-900 m-1"
+                : "text-ink-300"
+            }`}
+          >
+            <span className="text-base">{t.icon}</span>
+            {t.label}
+          </button>
+        ))}
+      </div>
     </nav>
-  )
+  );
 }

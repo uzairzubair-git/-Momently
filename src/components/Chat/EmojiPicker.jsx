@@ -1,9 +1,37 @@
 const EMOJIS = [
-  '😀', '😂', '😍', '😘', '😎', '🤩', '🥳', '😭',
-  '😢', '😡', '🤔', '😴', '🙌', '👏', '👍', '👎',
-  '🙏', '💪', '❤️', '🔥', '🎉', '🎊', '✨', '💯',
-  '🍕', '🍰', '🍾', '📸', '💃', '🕺', '😅', '🤗',
-]
+  "😀",
+  "😂",
+  "😍",
+  "😘",
+  "😎",
+  "🤩",
+  "🥳",
+  "😭",
+  "😢",
+  "😡",
+  "🤔",
+  "😴",
+  "🙌",
+  "👏",
+  "👍",
+  "👎",
+  "🙏",
+  "💪",
+  "❤️",
+  "🔥",
+  "🎉",
+  "🎊",
+  "✨",
+  "💯",
+  "🍕",
+  "🍰",
+  "🍾",
+  "📸",
+  "💃",
+  "🕺",
+  "😅",
+  "🤗",
+];
 
 export default function EmojiPicker({ onSelect, onClose }) {
   return (
@@ -12,14 +40,14 @@ export default function EmojiPicker({ onSelect, onClose }) {
         <button
           key={e}
           onClick={() => {
-            onSelect(e)
-            onClose()
+            onSelect(e);
+            onClose();
           }}
-          className="text-2xl p-1 rounded-lg hover:bg-gray-100 active:scale-90 transition"
+          className="text-2xl p-1 rounded-lg hover:bg-paper active:scale-90 transition"
         >
           {e}
         </button>
       ))}
     </div>
-  )
+  );
 }
